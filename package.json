@@ -1,0 +1,87 @@
+{
+  "name": "@dsh-external/dsh-keep-awake",
+  "version": "0.1.0",
+  "description": "DSH 合盖不休眠插件：在设置页「通用」里加一个开关，开启后调用 pmset disablesleep 让 Mac 合上盖子也不休眠，agent 任务持续运行、手机遥控持续可用；关闭后恢复系统正常休眠策略",
+  "private": false,
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/types/index.d.ts",
+  "files": [
+    "lib",
+    "scripts",
+    "cordis.patch.yml"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "macos",
+    "sleep",
+    "clamshell",
+    "keep-awake",
+    "caffeinate",
+    "pmset"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-settings": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-slots": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-host-webserver": "^0.1.0-rc.6",
+    "@types/node": "^24.13.3",
+    "@types/react": "~18.3.1",
+    "@types/react-dom": "~18.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsdown": "^0.22.14",
+    "typescript": "^5.9.0"
+  },
+  "scripts": {
+    "build": "npm run build:all",
+    "build:host": "tsc -p tsconfig.json",
+    "build:client": "tsdown",
+    "build:all": "npm run build:host && npm run build:client",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.client.json --noEmit",
+    "test": "npm run build:host && node --test test/*.test.mjs",
+    "prepack": "npm run build:all"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nanami-0713/dsh-keep-awake.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nanami-0713/dsh-keep-awake/issues"
+  },
+  "homepage": "https://github.com/nanami-0713/dsh-keep-awake#readme"
+}

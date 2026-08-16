@@ -1,0 +1,8 @@
+# @dsh-external/dsh-keep-awake — DSH bundle patch.
+# Host half: 读写 ~/.dsh/plugins/dsh-keep-awake/config.json，执行
+# `pmset -a disablesleep 0/1`（优先免密 sudo，否则走 osascript 管理员授权），
+# 并提供同源 HTTP API 给设置页查询/切换状态。
+# Client half: 在设置弹窗「通用」页注册一个开关行（settings.general.item）。
+- insert:
+    - id: dsh-keep-awake
+      name: '@dsh-external/dsh-keep-awake'
