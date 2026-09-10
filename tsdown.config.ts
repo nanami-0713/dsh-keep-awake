@@ -7,7 +7,7 @@ const NEVER_BUNDLE = [
   'react',
   'react/jsx-runtime',
   'react-dom',
-  '@deepseek-ai/dsh-client-runtime/client',
+  '@deepseek-ai/dsh-client-store',
 ]
 
 /**

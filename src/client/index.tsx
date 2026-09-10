@@ -9,8 +9,7 @@
  * 所有系统命令都由 host 半执行；浏览器只走同源 HTTP API，不获得任何提权能力。
  */
 import { useEffect } from 'react'
-import type { ClientContext } from '@deepseek-ai/dsh-client-runtime/client'
-import { defineStore } from '@deepseek-ai/dsh-client-runtime/client'
+import { defineStore } from '@deepseek-ai/dsh-client-store'
 // 仅用于把 settings.general.item 的 SlotMap 声明合并加载进来
 import type { SettingsGeneralItemOwnerProps } from '@deepseek-ai/dsh-client-ui-settings/client'
 import type { ComposedProps } from '@deepseek-ai/dsh-client-ui-slots'
@@ -213,6 +212,18 @@ function KeepAwakeRow(props: KeepAwakeRowProps): JSX.Element {
 }
 
 export const inject = ['slots']
+
+/**
+ * 0.1.2 起 dsh-client-runtime 包已移除，ctx 由 shell 直接注入。
+ * 按本插件实际用到的最小面声明（slots.inject/register + effect）。
+ */
+interface ClientContext {
+  slots: {
+    inject(name: string, factory: () => unknown): void
+    register(options: Record<string, unknown>, component: unknown): unknown
+  }
+  effect(fn: () => () => void, key: string): void
+}
 
 export function apply(ctx: ClientContext): void {
   const store = createRowStore()
